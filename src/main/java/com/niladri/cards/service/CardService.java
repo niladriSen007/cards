@@ -2,6 +2,8 @@ package com.niladri.cards.service;
 
 import com.niladri.cards.constants.CardConstants;
 import com.niladri.cards.dto.cards.CardDto;
+import com.niladri.cards.exception.CardAlreadyExists;
+import com.niladri.cards.exception.ResourceNotFound;
 import com.niladri.cards.mapper.CardMapper;
 import com.niladri.cards.model.card.CardModel;
 import com.niladri.cards.repository.CardRepo;
@@ -21,31 +23,31 @@ public class CardService implements CardServiceInterface {
     public String createCard(String mobileNumber) {
         Optional<CardModel> cardDetails = cardRepo.findByMobileNumber(mobileNumber);
         System.out.println("Card: " + cardDetails);
-        if(cardDetails.isPresent()) {
-            throw new RuntimeException("Card already exists for the mobile number");
+        if (cardDetails.isPresent()) {
+            throw new CardAlreadyExists("Card already exists for the mobile number");
         }
 
         CardModel newCard = cardRepo.save(createNewCard(mobileNumber));
-        return  newCard.getCardNumber();
+        return newCard.getCardNumber();
     }
 
     @Override
     public CardDto getCardDetails(String cardNumber) {
-       CardModel cardDetails = cardRepo.findByCardNumber(cardNumber).orElseThrow(()->new RuntimeException("Card not found"));
-       return CardMapper.toCardDto(cardDetails);
+        CardModel cardDetails = cardRepo.findByCardNumber(cardNumber).orElseThrow(() -> new ResourceNotFound("Card", "cardNumber", cardNumber));
+        return CardMapper.toCardDto(cardDetails);
     }
 
     @Override
     public CardDto updateCardDetails(String cardNumber, CardDto cardDto) {
-        CardModel cardDetails = cardRepo.findById(Long.parseLong(cardNumber)).orElseThrow(()-> new RuntimeException("Card not found"));
+        CardModel cardDetails = cardRepo.findByCardNumber(cardNumber).orElseThrow(() -> new ResourceNotFound("Card", "cardNumber", cardNumber));
         CardModel updatedCard = cardRepo.save(CardMapper.toCardModel(cardDto));
         return CardMapper.toCardDto(updatedCard);
     }
 
     @Override
     public void deleteCard(String cardNumber) {
-        CardModel cardDetails = cardRepo.findById(Long.parseLong(cardNumber)).orElseThrow(()-> new RuntimeException("Card not found"));
-        cardRepo.deleteById(Long.parseLong(cardNumber));
+        CardModel cardDetails = cardRepo.findByCardNumber(cardNumber).orElseThrow(() -> new ResourceNotFound("Card", "cardNumber", cardNumber));
+        cardRepo.delete(cardDetails);
     }
 
     private CardModel createNewCard(String mobileNumber) {
