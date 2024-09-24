@@ -11,4 +11,6 @@ public interface CardRepo extends JpaRepository<CardModel, Long> {
     Optional<CardModel> findByMobileNumber(String mobileNumber);
 
     Optional<CardModel> findByCardNumber(String cardNumber);
+
+    void deleteByCardNumber(String cardNumber);
 }

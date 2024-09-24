@@ -18,7 +18,7 @@ public class CardDto {
     private String mobileNumber;
 
     @NotEmpty
-    @Pattern(regexp = "(^$|[0-9]{16})", message = "Card number should be 16 digits")
+//    @Pattern(regexp = "(^$|[0-9]{16})", message = "Card number should be 16 digits")
     @Schema(description = "Card number", example = "1234567890123456")
     private String cardNumber;
 
