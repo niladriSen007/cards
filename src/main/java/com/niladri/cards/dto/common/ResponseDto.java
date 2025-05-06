@@ -7,10 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "Response", description = "Response details")
 public class ResponseDto {
+
+    public ResponseDto(String statusCode, String statusMessage) {
+        this.statusCode = statusCode;
+        this.statusMessage = statusMessage;
+    }
 
     @Schema(description = "Status code", example = "200")
     @NotNull

@@ -9,10 +9,17 @@ import org.springframework.http.HttpStatus;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Schema(name = "Error_Response", description = "Error response details")
 public class ErrorResponseDto {
+
+    public ErrorResponseDto(String apiPath, String errorMessage, HttpStatus errorCode, LocalDateTime errorTime) {
+        this.apiPath = apiPath;
+        this.errorMessage = errorMessage;
+        this.errorCode = errorCode;
+        this.errorTime = errorTime;
+    }
     @Schema(description = "API path", example = "/api/v1/accounts")
     private String apiPath;
     @Schema(description = "Error message", example = "Internal server error")

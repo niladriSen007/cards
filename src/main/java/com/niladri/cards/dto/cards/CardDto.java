@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class CardDto {
 
     @NotEmpty (message = "Mobile number cannot be empty")
-//    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number should be 10 digits")
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number should be 10 digits")
     @Schema(description = "Mobile number", example = "1234567890")
     private String mobileNumber;
 
