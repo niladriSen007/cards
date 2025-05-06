@@ -1,5 +1,6 @@
 package com.niladri.cards.controller;
 
+
 import com.niladri.cards.dto.cards.CardDto;
 import com.niladri.cards.dto.common.ResponseDto;
 import com.niladri.cards.service.CardService;
@@ -7,6 +8,7 @@ import com.niladri.cards.service.CardServiceInterface;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,11 +18,11 @@ import java.util.Optional;
 
 @RequestMapping("/api/v1/cards")
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Validated
 public class CardController {
 
-    private CardService cardService;
+    private final CardService cardService;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createCard(@Valid @RequestParam @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits") String mobileNumber) {
@@ -29,7 +31,7 @@ public class CardController {
     }
 
     @GetMapping("/get/{cardNumber}")
-    public ResponseEntity<CardDto> getCardDetails( @PathVariable String cardNumber) {
+    public ResponseEntity<CardDto> getCardDetails(@PathVariable String cardNumber) {
         CardDto cardDetails = cardService.getCardDetails(cardNumber);
         return ResponseEntity.ok(cardDetails);
     }

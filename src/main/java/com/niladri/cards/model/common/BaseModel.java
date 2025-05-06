@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 public class BaseModel {
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdDate;
 
     @CreatedBy
     @Column(updatable = false)
@@ -30,7 +30,7 @@ public class BaseModel {
 
     @LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedDate;
 
     @LastModifiedBy
     @Column(insertable = false)

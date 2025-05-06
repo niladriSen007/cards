@@ -5,15 +5,11 @@ spring:
   application:
     name: cards
   datasource:
-    url: jdbc:h2:mem:cards
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://localhost:5432/jpa-microservice-cards
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
